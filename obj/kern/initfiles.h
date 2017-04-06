@@ -1,0 +1,1 @@
+ INITFILE(sh) INITFILE(ls) INITFILE(echo) INITFILE(cat) INITFILE(wc) INITFILE(testfs) INITFILE(testvm)

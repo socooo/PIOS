@@ -1,0 +1,131 @@
+obj/lib/fprintf.o: lib/fprintf.c inc/stdio.h inc/types.h inc/stdarg.h
+obj/user/testfs.o: user/testfs.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/stdlib.h inc/cdefs.h inc/string.h inc/assert.h inc/stdio.h \
+ inc/unistd.h inc/dirent.h inc/file.h inc/syscall.h inc/trap.h \
+ inc/types.h inc/errno.h inc/file.h inc/stat.h inc/elf.h
+obj/kern/cons.o: kern/cons.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/stdarg.h inc/x86.h inc/cdefs.h inc/string.h inc/assert.h inc/stdio.h \
+ inc/syscall.h inc/trap.h inc/types.h kern/cpu.h inc/mmu.h inc/trap.h \
+ kern/cons.h kern/mem.h kern/spinlock.h kern/debug.h inc/cdefs.h \
+ kern/file.h inc/file.h dev/video.h dev/kbd.h dev/serial.h
+obj/kern/sprintf.o: lib/sprintf.c inc/types.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/assert.h inc/stdio.h inc/cdefs.h
+obj/kern/entry.o: kern/entry.S inc/trap.h inc/cdefs.h
+obj/kern/debug.o: kern/debug.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/stdarg.h inc/assert.h inc/stdio.h inc/cdefs.h inc/x86.h kern/cons.h \
+ inc/types.h kern/debug.h inc/cdefs.h kern/init.h kern/spinlock.h
+obj/lib/strerror.o: lib/strerror.c inc/stdio.h inc/types.h inc/stdarg.h
+obj/lib/string.o: lib/string.c inc/string.h inc/types.h
+obj/kern/init.o: kern/init.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/string.h inc/assert.h inc/stdio.h inc/cdefs.h inc/cdefs.h inc/elf.h \
+ inc/vm.h kern/init.h kern/cons.h inc/types.h kern/debug.h kern/mem.h \
+ inc/mmu.h inc/x86.h kern/cpu.h inc/trap.h kern/trap.h kern/spinlock.h \
+ kern/mp.h kern/proc.h inc/syscall.h inc/trap.h kern/pmap.h inc/file.h \
+ kern/file.h dev/pic.h dev/lapic.h dev/ioapic.h
+obj/boot/main.o: boot/main.c inc/x86.h inc/types.h inc/cdefs.h inc/elf.h
+obj/lib/debug.o: lib/debug.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/stdlib.h inc/cdefs.h inc/assert.h inc/stdio.h inc/ctype.h
+obj/kern/file.o: kern/file.c inc/x86.h inc/types.h inc/cdefs.h inc/stat.h \
+ inc/stdio.h inc/stdarg.h inc/unistd.h inc/string.h inc/syscall.h \
+ inc/trap.h inc/types.h inc/dirent.h inc/file.h kern/cpu.h inc/assert.h \
+ inc/stdio.h inc/mmu.h inc/trap.h kern/trap.h inc/cdefs.h kern/proc.h \
+ kern/spinlock.h kern/debug.h kern/pmap.h inc/vm.h kern/mem.h inc/file.h \
+ kern/file.h kern/init.h kern/cons.h obj/kern/initfiles.h
+obj/lib/file.o: lib/file.c inc/file.h inc/types.h inc/stat.h inc/stdio.h \
+ inc/stdarg.h inc/dirent.h inc/file.h inc/string.h inc/assert.h \
+ inc/stdio.h inc/cdefs.h inc/syscall.h inc/trap.h inc/types.h inc/errno.h \
+ inc/mmu.h
+obj/kern/printfmt.o: lib/printfmt.c inc/types.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/string.h inc/stdarg.h inc/assert.h inc/stdio.h \
+ inc/cdefs.h
+obj/user/echo.o: user/echo.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/string.h
+obj/lib/stdlib.o: lib/stdlib.c inc/cdefs.h inc/file.h inc/types.h \
+ inc/stdlib.h inc/cdefs.h inc/syscall.h inc/trap.h inc/types.h \
+ inc/assert.h inc/stdio.h inc/stdarg.h inc/string.h
+obj/lib/exec.o: lib/exec.c inc/cdefs.h inc/mmu.h inc/cdefs.h inc/types.h \
+ inc/assert.h inc/stdio.h inc/types.h inc/stdarg.h inc/stdarg.h \
+ inc/string.h inc/syscall.h inc/trap.h inc/dirent.h inc/file.h \
+ inc/unistd.h inc/elf.h inc/vm.h
+obj/lib/cprintf.o: lib/cprintf.c inc/types.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/stdarg.h inc/assert.h inc/stdio.h inc/cdefs.h
+obj/kern/mem.o: kern/mem.c inc/x86.h inc/types.h inc/cdefs.h inc/mmu.h \
+ inc/types.h inc/string.h inc/assert.h inc/stdio.h inc/stdarg.h \
+ kern/cpu.h inc/trap.h kern/mem.h kern/spinlock.h kern/debug.h \
+ inc/cdefs.h kern/pmap.h inc/vm.h dev/nvram.h
+obj/kern/pmap.o: kern/pmap.c inc/x86.h inc/types.h inc/cdefs.h inc/mmu.h \
+ inc/types.h inc/cdefs.h inc/string.h inc/assert.h inc/stdio.h \
+ inc/stdarg.h inc/syscall.h inc/trap.h inc/vm.h kern/cpu.h inc/trap.h \
+ kern/trap.h kern/proc.h kern/spinlock.h kern/debug.h kern/pmap.h \
+ kern/mem.h inc/file.h
+obj/kern/spinlock.o: kern/spinlock.c inc/assert.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/cdefs.h inc/x86.h kern/cpu.h inc/types.h inc/mmu.h \
+ inc/trap.h kern/spinlock.h kern/debug.h inc/cdefs.h kern/cons.h
+obj/lib/stdio.o: lib/stdio.c inc/file.h inc/types.h inc/stat.h \
+ inc/stdio.h inc/stdarg.h inc/unistd.h inc/cdefs.h inc/errno.h inc/file.h \
+ inc/dirent.h inc/string.h inc/assert.h inc/stdio.h inc/syscall.h \
+ inc/trap.h inc/types.h
+obj/lib/unistd.o: lib/unistd.c inc/file.h inc/types.h inc/unistd.h \
+ inc/cdefs.h inc/dirent.h inc/file.h inc/assert.h inc/stdio.h \
+ inc/stdarg.h inc/stdarg.h
+obj/kern/proc.o: kern/proc.c inc/string.h inc/types.h inc/syscall.h \
+ inc/trap.h inc/cdefs.h inc/types.h kern/cpu.h inc/assert.h inc/stdio.h \
+ inc/stdarg.h inc/x86.h inc/mmu.h inc/trap.h kern/mem.h kern/trap.h \
+ inc/cdefs.h kern/proc.h kern/spinlock.h kern/debug.h kern/pmap.h \
+ inc/vm.h inc/file.h kern/init.h kern/file.h
+obj/user/cat.o: user/cat.c inc/string.h inc/types.h inc/unistd.h \
+ inc/cdefs.h inc/assert.h inc/stdio.h inc/stdarg.h inc/errno.h inc/file.h
+obj/lib/readline.o: lib/readline.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/unistd.h inc/cdefs.h
+obj/kern/syscall.o: kern/syscall.c inc/x86.h inc/types.h inc/cdefs.h \
+ inc/string.h inc/assert.h inc/stdio.h inc/stdarg.h inc/trap.h \
+ inc/types.h inc/syscall.h inc/trap.h kern/cpu.h inc/mmu.h kern/trap.h \
+ inc/cdefs.h kern/proc.h kern/spinlock.h kern/debug.h kern/pmap.h \
+ inc/vm.h kern/mem.h inc/file.h kern/syscall.h kern/file.h
+obj/user/testvm.o: user/testvm.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/string.h inc/assert.h inc/stdio.h inc/cdefs.h inc/syscall.h \
+ inc/trap.h inc/types.h inc/x86.h inc/mmu.h inc/vm.h
+obj/lib/printfmt.o: lib/printfmt.c inc/types.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/string.h inc/stdarg.h inc/assert.h inc/stdio.h \
+ inc/cdefs.h
+obj/user/wc.o: user/wc.c inc/types.h inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/stdlib.h inc/cdefs.h inc/string.h inc/unistd.h inc/errno.h \
+ inc/file.h
+obj/boot/bootother.o: boot/bootother.S inc/mmu.h inc/cdefs.h
+obj/kern/string.o: lib/string.c inc/string.h inc/types.h
+obj/lib/fork.o: lib/fork.c inc/file.h inc/types.h inc/stat.h inc/unistd.h \
+ inc/cdefs.h inc/string.h inc/syscall.h inc/trap.h inc/types.h \
+ inc/assert.h inc/stdio.h inc/stdarg.h inc/errno.h inc/file.h inc/mmu.h \
+ inc/vm.h
+obj/user/sh.o: user/sh.c inc/cdefs.h inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/stdlib.h inc/cdefs.h inc/unistd.h inc/string.h inc/assert.h \
+ inc/stdio.h inc/errno.h inc/file.h inc/args.h
+obj/kern/trapasm.o: kern/trapasm.S inc/mmu.h inc/cdefs.h inc/trap.h \
+ kern/cpu.h
+obj/lib/crt0.o: lib/crt0.S inc/syscall.h inc/trap.h inc/cdefs.h inc/vm.h
+obj/lib/sprintf.o: lib/sprintf.c inc/types.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/assert.h inc/stdio.h inc/cdefs.h
+obj/lib/cputs.o: lib/cputs.c inc/stdio.h inc/types.h inc/stdarg.h \
+ inc/syscall.h inc/trap.h inc/cdefs.h inc/types.h
+obj/user/ls.o: user/ls.c inc/stat.h inc/types.h inc/errno.h inc/file.h \
+ inc/stdio.h inc/stdarg.h inc/stdlib.h inc/cdefs.h inc/string.h \
+ inc/dirent.h inc/assert.h inc/stdio.h inc/args.h
+obj/kern/mp.o: kern/mp.c inc/types.h inc/string.h inc/types.h \
+ inc/assert.h inc/stdio.h inc/stdarg.h inc/cdefs.h kern/init.h \
+ inc/cdefs.h kern/cpu.h inc/x86.h inc/mmu.h inc/trap.h kern/mp.h \
+ dev/lapic.h dev/ioapic.h
+obj/lib/dir.o: lib/dir.c inc/file.h inc/types.h inc/stat.h inc/errno.h \
+ inc/file.h inc/string.h inc/assert.h inc/stdio.h inc/stdarg.h \
+ inc/cdefs.h inc/dirent.h
+obj/kern/cprintf.o: lib/cprintf.c inc/types.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/stdarg.h inc/assert.h inc/stdio.h inc/cdefs.h
+obj/boot/boot.o: boot/boot.S inc/mmu.h inc/cdefs.h
+obj/kern/trap.o: kern/trap.c inc/mmu.h inc/cdefs.h inc/types.h inc/x86.h \
+ inc/types.h inc/assert.h inc/stdio.h inc/stdarg.h kern/cpu.h inc/trap.h \
+ kern/trap.h inc/cdefs.h kern/cons.h kern/init.h kern/proc.h \
+ inc/syscall.h inc/trap.h kern/spinlock.h kern/debug.h kern/pmap.h \
+ inc/vm.h kern/mem.h inc/file.h kern/syscall.h dev/lapic.h dev/kbd.h \
+ dev/serial.h
+obj/kern/cpu.o: kern/cpu.c inc/assert.h inc/stdio.h inc/types.h \
+ inc/stdarg.h inc/cdefs.h inc/string.h kern/mem.h inc/types.h inc/mmu.h \
+ inc/x86.h kern/cpu.h inc/trap.h kern/init.h inc/cdefs.h dev/lapic.h

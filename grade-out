@@ -1,0 +1,81 @@
+1234 decimal is 2322 octal!
+debug_check() succeeded!
+trap_check_kernel() succeeded!
+kernel warning at kern/mem.c:48: Assuming we have 1GB of memory!
+Physical memory: 1048576K available, base = 640K, extended = 1047552K
+mem_check: 261393 free pages
+mem_check() succeeded!
+spinlock_check() succeeded!
+pmap_check() succeeded!
+testfs: in main()
+initfilecheck: found file 'consin' mode 0x9000 size 0
+initfilecheck: found file 'consout' mode 0x1000 size 0
+initfilecheck: found file '/' mode 0x2000 size 0
+initfilecheck: found file 'sh' mode 0x1000 size 82098
+initfilecheck: found file 'ls' mode 0x1000 size 60313
+initfilecheck: found file 'echo' mode 0x1000 size 49675
+initfilecheck: found file 'cat' mode 0x1000 size 52198
+initfilecheck: found file 'wc' mode 0x1000 size 59849
+initfilecheck: found file 'testfs' mode 0x1000 size 95323
+initfilecheck: found file 'testvm' mode 0x1000 size 66011
+initfilecheck passed
+readwritecheck passed
+seekcheck passed
+readdircheck: found file 'consin' mode 0x9000 size 0
+readdircheck: found file 'consout' mode 0x1000 size 0
+readdircheck: found file '/' mode 0x2000 size 0
+readdircheck: found file 'sh' mode 0x1000 size 82098
+readdircheck: found file 'ls' mode 0x1000 size 60313
+readdircheck: found file 'echo' mode 0x1000 size 49675
+readdircheck: found file 'cat' mode 0x1000 size 52198
+readdircheck: found file 'wc' mode 0x1000 size 59849
+readdircheck: found file 'testfs' mode 0x1000 size 95323
+readdircheck: found file 'testvm' mode 0x1000 size 66011
+readdircheck passed
+Buffered console output should NOT have appeared yet
+conscheck: write() to STDOUT_FILENO
+conscheck: fprintf() to 'stdout'
+conscheck: fprintf() to 'consout' file
+Buffered console output SHOULD have appeared now
+123456789
+consoutcheck done
+Enter something: FOOBAR
+You typed: FOOBAR
+consincheck done
+called by execcheck
+execcheck done
+user panic at user/cat.c:41: can't open reconcilefileC: Conflict detected
+reconcilecheck: basic file reconciliation successful
+forkwrite: reconcilefile0
+forkwrite: reconcilefile1
+forkwrite: reconcilefile2
+-           9 consin
+-         253 consout
+d           0 /
+-       82098 sh
+-       60313 ls
+-       49675 echo
+-       52198 cat
+-       59849 wc
+-       95323 testfs
+-       66011 testvm
+-          26 reconcilefile0
+-          26 reconcilefile1
+-          26 reconcilefile2
+C          26 reconcilefileC
+reconcilecheck: running echo
+reconcilecheck: echo running
+called by reconcilecheck
+reconcilecheck: echo finished
+reconcilecheck done
+testfs: all tests completed; starting shell...
+$ echo echo in script >script
+$ sh <script >out
+$ cat script out
+echo in script
+in script
+$ wc script out
+1 3 15 script
+1 2 10 out
+$ exit
+root process exited with status 0
