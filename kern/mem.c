@@ -144,8 +144,6 @@ mem_free(pageinfo *pi)
 	// Fill this function in.
 	//panic("mem_free not implemented.");
 	assert(pi->refcount == 0);
-	if(((int)pi <= 0x123608) && ((int)pi >= 0x1224e0))
-		cprintf("=========== in mem_free 0x%x free.============\n", pi);
 	spinlock_acquire(mem_spinlock);
 	pi->free_next = mem_freelist;
 	mem_freelist = pi;
