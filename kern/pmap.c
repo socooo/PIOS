@@ -287,21 +287,6 @@ pmap_remove(pde_t *pdir, uint32_t va, size_t size)
 	}
 	if(remove_pde_no > 0){
 		for(i = 1; i <= remove_pde_no; i++){
-			/*if(i == 0 || i == remove_pde_no){
-				int j =0;
-				int hasEntry = 0;
-				pte_t* pt_base = (pte_t*)PGADDR(pdir[pde_i+i]);
-				for(j; j < NPTENTRIES; j++){
-					if(pt_base[j] != PTE_ZERO){
-						hasEntry = 1;
-						break;
-					}
-				}
-				if(!hasEntry){
-					mem_decref((pageinfo *)mem_phys2pi(PGADDR(pdir[pde_i + i])), mem_free);
-					pdir[pde_i+i] = PTE_ZERO;
-				}
-			}*/
 			if(i == 1){
 				if(pte_i == 0){
 					if(pdir[pde_i] != PTE_ZERO){
@@ -379,7 +364,6 @@ pmap_copy(pde_t *spdir, uint32_t sva, pde_t *dpdir, uint32_t dva,
 		sva += PAGESIZE;
 		dva += PAGESIZE;
 	}
-	//cprintf("in pmapcopy, content in spdir 0xefffff9c: %x, dpdir: %x.\n", (int)*pmap_walk(spdir, 0xefffff9c,false),(int)*pmap_walk(dpdir,0xefffff9c,false));
 	return true;
 }
 
@@ -397,9 +381,6 @@ pmap_pagefault(trapframe *tf)
 	uint32_t fva = rcr2();
 	proc* p = proc_cur();
 	pageinfo* origin_pi;	
-	//cprintf("in page fault, start. fva: %x err: %x.\n", fva, tf->err);
-	//cprintf("pmap_pagefault fva %x, proc: %x.\n", fva, p->id);
-	// Fill in the rest of this code.
 	if((fva < VM_USERLO)  | (fva >= VM_USERHI)){
 		cprintf("in page fault, start. fva: %x err: %x.\n", fva, tf->err);
 		cprintf("in page fault, out bound.\n");
@@ -407,7 +388,6 @@ pmap_pagefault(trapframe *tf)
 	}
 	pte_t* fault_pte_point =  pmap_walk(p->pdir, fva, false);
 	uint32_t fault_pte_content = *fault_pte_point;
-	//cprintf("in pagefault: fault pte content: %x, pde content: %x.\n", fault_pte_content, p->pdir[PDX(fva)]);
 	if(!fault_pte_point){
 		cprintf("in page fault, start. fva: %x err: %x.\n", fva, tf->err);
 		cprintf("in page fault, no pte.\n");
@@ -423,40 +403,17 @@ pmap_pagefault(trapframe *tf)
 	}else{
 		origin_pi = mem_phys2pi(PGADDR(fault_pte_content));
 	}
-	/*if(page_flag & SYS_READ){
-		if(PGADDR(fault_pte_content) == PTE_ZERO){
-			origin_pi = mem_alloc();
-			pte_t* inserted_pte_point = pmap_insert(p->pdir, origin_pi, fva, SYS_READ |PTE_P);
-			uint32_t origin_pi_phy = mem_pi2phys(origin_pi);
-			int* result = memset((void*)origin_pi_phy, 0, PAGESIZE);
-			if(fva == 0x40401000)
-				cprintf("in page fault read, pte_zero content: %x, fva: %x.\n", *(int*)324205, (*(volatile int*)fva));
-				//cprintf("in page fault read, pdir_content: %x, pte_content: %x , proc: %x, err: %x.\n", ((int*)PGADDR(p->pdir[PDX(fva)]))[1], fault_pte_content, p->id, tf->err);
-			fault_pte_content = fault_pte_content | PTE_A | PTE_P | PTE_U | SYS_READ;
-			if(!(page_flag & SYS_WRITE)){
-				cprintf("in page fault read before return, pte_content: %x .\n", fault_pte_content, p->id);
-				pmap_inval(p->pdir, PGADDR(fva), PAGESIZE);
-				trap_return(tf);
-			}
-		}
-	}*/
 	if(page_flag & SYS_WRITE){		
 		if(origin_pi->refcount > 1 || (!origin_pi)){
 			pageinfo* new_page = mem_alloc();
 			memmove((void*)mem_pi2phys(new_page),(void*)PGADDR(fault_pte_content), PAGESIZE);
 			pmap_insert(p->pdir, new_page, fva, SYS_RW | PTE_W | PTE_P | PTE_U);
-			//cprintf("in page fault, new page: %x.", mem_pi2phys(new_page));
-			//cprintf("after insert, fault pte content: %x, pde content: %x, what in add: %x.\n\n", 
-			//	*pmap_walk(p->pdir,fva,false), p->pdir[PDX(fva)], *((int*)(*pmap_walk(p->pdir,fva,false))));
 		}
 		if(origin_pi->refcount == 1){
 			pte_t* pte = pmap_walk(p->pdir, fva, false);
 			assert(pte != NULL);
 			*pte |= PTE_W;
 		}
-		//pte_t* after_fault_pte_point =  pmap_walk(p->pdir, fva, false);
-		//uint32_t after_fault_pte_content = *fault_pte_point;
-		//cprintf("after write, fault pte content: %x, pde content: %x.\n\n\n", after_fault_pte_content, p->pdir[PDX(fva)]);
 		pmap_inval(p->pdir, PGADDR(fva), PAGESIZE);
 		trap_return(tf);
 	}
@@ -496,7 +453,6 @@ pmap_mergepage(pte_t *rpte, pte_t *spte, pte_t *dpte, uint32_t dva)
 			i += 4;
 		}
 	}
-	//panic("pmap_mergepage() not implemented");
 }
 
 // 
@@ -524,9 +480,7 @@ pmap_merge(pde_t *rpdir, pde_t *spdir, uint32_t sva,
 			continue;
 		}
 		pte_t* rpte = pmap_walk(rpdir, tmp_va, false);
-		//cprintf("rpte add: %x     ", rpte);
 		pte_t* spte = pmap_walk(spdir, tmp_va, false);
-		//cprintf("spte add: %x     ", spte);
 		if(*rpte == *spte){
 			tmp_va += PAGESIZE;
 			continue;
@@ -556,7 +510,6 @@ pmap_merge(pde_t *rpdir, pde_t *spdir, uint32_t sva,
 		tmp_va += PAGESIZE;
 	}
 	return 1;
-	//panic("pmap_merge() not implemented");
 }
 
 //
@@ -604,10 +557,6 @@ pmap_setperm(pde_t *pdir, uint32_t va, uint32_t size, int perm)
 		}
 		tmp_va += PAGESIZE;
 	}
-	/*
-	if(va == 0x40401000)
-			cprintf("in pmap_setperm, after flush, pde: %x, pte: %x, pdir: %x.\n", pdir[PDX(va)], *pmap_walk(pdir, va, false),*(uint32_t*)pdir);
-	*/
 	return 1;
 }
 
