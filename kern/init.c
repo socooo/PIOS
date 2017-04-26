@@ -63,7 +63,6 @@ init(void)
 	// hong :
 	// the first thing the kernel does is initialize the console device driver so that your kernel can produce visible output. 
 	cons_init();
-	// Lab 1: test cprintf and debug_trace
 	cprintf("1234 decimal is %o octal!\n", 1234);
 	debug_check();
 	// Initialize and load the bootstrap CPU's GDT, TSS, and IDT.
@@ -72,8 +71,7 @@ init(void)
 	// Physical memory detection/initialization.
 	// Can't call mem_alloc until after we do this!
 	mem_init();
-	
-	// Lab 2: check spinlock implementation
+
 	if (cpu_onboot())
 		spinlock_check();
 
@@ -84,15 +82,14 @@ init(void)
 	pic_init();		// setup the legacy PIC (mainly to disable it)
 	ioapic_init();		// prepare to handle external device interrupts
 	lapic_init();		// setup this CPU's local APIC
-	//cpu_bootothers();	// Get other processors started
-	//cprintf("CPU %d (%s) has booted\n", cpu_cur()->id,
-	//	cpu_onboot() ? "BP" : "AP");
+	cpu_bootothers();	// Get other processors started
+	cprintf("CPU %d (%s) has booted\n", cpu_cur()->id,
+		cpu_onboot() ? "BP" : "AP");
 
 	// Initialize the I/O system.
 	file_init();		// Create root directory and console I/O files
 	pci_init();		// Initialize the PCI bus and network card
 	net_init();		
-	// Lab 4: uncomment this when you can handle IRQ_SERIAL and IRQ_KBD.
 	cons_intenable();	// Let the console start producing interrupts
 	// Initialize the process management code.
 	proc_init();
@@ -106,29 +103,8 @@ init(void)
 		proc_root->sv.tf.esp = (uint32_t)(VM_USERHI -1);
 		proc_root->sv.tf.eflags = FL_IF;
 		proc_ready(proc_root);
-		//lcr3(mem_phys(proc_root->pdir));
 	}
 	proc_sched();
-	// Lab 1: change this so it enters user() in user mode,
-	// running on the user_stack declared above,
-	// instead of just calling user() directly.
-	/*
-	if (!cpu_onboot())
-			while(1);
-			
-	 trapframe tf = {
-		gs: CPU_GDT_UDATA | 3,
-		fs: CPU_GDT_UDATA | 3,
-		es: CPU_GDT_UDATA | 3,
-		ds: CPU_GDT_UDATA | 3,
-		cs: CPU_GDT_UCODE | 3,
-		ss: CPU_GDT_UDATA | 3,
-		eflags: FL_IOPL_3,
-		eip: (uint32_t)user,
-		esp: (uint32_t)&user_stack[PAGESIZE],
-	};
-	 	cprintf ("to user\n");
-	trap_return(&tf);*/
 }
 
 // This is the first function that gets run in user mode (ring 3).
@@ -137,11 +113,8 @@ init(void)
 void
 user()
 {
-	// hong: system haven't complete 
-	 cprintf("in user()\n");
+	cprintf("in user()\n");
 	assert(read_esp() > (uint32_t) &user_stack[0]);
-	// hong:
-	// sizeof(user_stack) == 4096
 	assert(read_esp() < (uint32_t) &user_stack[sizeof(user_stack)]);
 	// Check the system call and process scheduling code.
 	proc_check();
@@ -191,14 +164,11 @@ void load_elf(char* elf, proc* p){
 		}
 
 		char* load_va_start = (char*)phd->p_va;
-		//char* load_start = (char*)phd + phd->p_offset;
 		char* load_start = elf + phd->p_offset;
 		for(j = 0; j < phd->p_filesz; j++){
 			*(load_va_start + j) = *(load_start + j);
 		}
-		// memmove((char*)p_va_start, (char*)((uint32_t)phd + phd->p_offset), (size_t)phd->p_filesz);
 		if(phd->p_memsz > phd->p_filesz){
-			//memset((char*)((uint32_t)phd + phd->p_offset + phd->p_filesz), 0, (size_t)(phd->p_memsz - phd->p_filesz));
 			for(j; j < phd->p_memsz; j++)
 				*(load_va_start + j) = 0;
 		}
