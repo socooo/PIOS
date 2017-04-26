@@ -111,8 +111,6 @@ file_initroot(proc *root)
 	// initfiles[i][2] is a pointer to the end of the file's content
 	// (i.e., a pointer to the first byte after the file's last byte).
 	int ninitfiles = sizeof(initfiles)/sizeof(initfiles[0]);
-	// Lab 4: your file system initialization code here.
-	//warn("file_initroot: file system initialization not done\n");
 	for(i; i < ninitfiles; i++){
 		strcpy(files->fi[i+4].de.d_name, initfiles[i][0]);
 		files->fi[i+4].dino = FILEINO_ROOTDIR;
@@ -149,8 +147,6 @@ file_io(trapframe *tf)
 	// Perform I/O with whatever devices we have access to.
 	bool iodone = 0;
 	iodone |= cons_io();
-	//cprintf("in file io, iodone: %d.\n", iodone);
-	// Has the root process exited?
 	if (files->exited) {
 		cprintf("root process exited with status %d\n", files->status);
 		done();
