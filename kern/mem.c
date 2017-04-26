@@ -60,7 +60,6 @@ mem_init(void)
 		(int)(basemem/1024), (int)(extmem/1024));
 	spinlock_init(mem_spinlock);
 
-	// Insert code here to:
 	// (1)	allocate physical memory for the mem_pageinfo array,
 	//	making it big enough to hold mem_npage entries.
 	// (2)	add all pageinfo structs in the array representing
@@ -100,9 +99,6 @@ mem_init(void)
 	}
 	*freetail = NULL;	// null-terminate the freelist
 
-	// ...and remove this when you're ready.
-	//panic("mem_init() not implemented");
-
 	// Check to make sure the page allocator seems to work correctly.
 	mem_check();
 }
@@ -121,8 +117,6 @@ mem_init(void)
 pageinfo *
 mem_alloc(void)
 {
-	// Fill this function in.
-	//panic("mem_alloc not implemented.");
 	pageinfo *return_page;
 	if(!mem_freelist)
 		return NULL;
@@ -141,8 +135,6 @@ mem_alloc(void)
 void
 mem_free(pageinfo *pi)
 {
-	// Fill this function in.
-	//panic("mem_free not implemented.");
 	assert(pi->refcount == 0);
 	spinlock_acquire(mem_spinlock);
 	pi->free_next = mem_freelist;
