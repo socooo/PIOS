@@ -60,8 +60,6 @@ init(void)
 
 	// Initialize the console.
 	// Can't call cprintf until after we do this!
-	// hong :
-	// the first thing the kernel does is initialize the console device driver so that your kernel can produce visible output. 
 	cons_init();
 	cprintf("1234 decimal is %o octal!\n", 1234);
 	debug_check();
